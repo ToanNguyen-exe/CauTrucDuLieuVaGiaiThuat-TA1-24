@@ -1,0 +1,9 @@
+Factorial(n)
+    // n: số nguyên không âm
+    // Kết quả: n!
+
+    if n = 0 or n = 1 then
+        return 1
+    else
+        return n × Factorial(n - 1)
+    end if

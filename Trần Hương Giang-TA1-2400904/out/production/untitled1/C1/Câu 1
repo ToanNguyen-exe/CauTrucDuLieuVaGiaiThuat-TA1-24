@@ -1,0 +1,10 @@
+LinearSearch(A, n, x)
+    // A: mảng gồm n phần tử (chỉ số 0 → n-1)
+    // x: giá trị cần tìm
+
+    for i ← 0 to n-1 do
+        if A[i] = x then
+            return i
+        end if
+    end for
+    return -1

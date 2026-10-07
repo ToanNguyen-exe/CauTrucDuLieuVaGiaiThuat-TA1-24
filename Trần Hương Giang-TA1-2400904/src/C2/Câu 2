@@ -1,0 +1,10 @@
+BubbleSort(A, n)
+    for i ← 1 to n-1 do
+        for j ← 0 to n-1-i do
+            if A[j] > A[j+1] then
+                temp ← A[j]
+                A[j] ← A[j+1]
+                A[j+1] ← temp
+            end if
+        end for
+    end for
