@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thuật Toán Sắp Xếp Chèn (Insertion Sort)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .khung {
+            border: 1px solid #333;
+            padding: 20px;
+            max-width: 650px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 6px 14px;
+            font-size: 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #ketQua {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        #chiTietCacBuoc {
+            background-color: #f4f4f4;
+            border: 1px dashed #666;
+            padding: 10px;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="khung">
+        <h2>Thuật Toán Sắp Xếp Chèn (Insertion Sort)</h2>
+        <p><strong>Mảng ban đầu:</strong> <span id="hienThiMang"></span></p>
+        <button onclick="chaySapXepChen()">Bắt đầu sắp xếp</button>
+        <div id="ketQua"></div>
+    </div>
+
+    <div class="khung">
+        <h3>Chi tiết từng bước chèn:</h3>
+        <div id="chiTietCacBuoc">Chưa thực hiện sắp xếp...</div>
+    </div>
+
+    <script>
+        /*
+        ========================================================================
+        MÃ GIẢ THUẬT TOÁN SẮP XẾP CHÈN (INSERTION SORT)
+
+        Thuật toán SapXepChen(A, n):
+            Đầu vào (Input) : Mảng A gồm n phần tử
+            Đầu ra (Output) : Mảng A đã sắp xếp tăng dần
+
+            Bắt đầu:
+                Lặp i từ 1 đến n - 1:
+                    key = A[i]
+                    j = i - 1
+                    Trong khi (j >= 0 và A[j] > key):
+                        A[j + 1] = A[j]    // Dịch chuyển phần tử sang phải
+                        j = j - 1
+                    A[j + 1] = key         // Chèn key vào đúng vị trí
+            Kết thúc
+        ========================================================================
+        */
+
+        const arr = [29, 10, 14, 37, 13];
+        document.getElementById("hienThiMang").innerText = "[" + arr.join(", ") + "]";
+
+        function insertionSort(a) {
+            let n = a.length;
+
+            for (let i = 1; i < n; i++) {
+                let key = a[i];  // Lưu giá trị cần chèn
+                let j = i - 1;
+
+                // Dịch chuyển các phần tử lớn hơn key sang phải
+                while (j >= 0 && a[j] > key) {
+                    a[j + 1] = a[j];
+                    j = j - 1;
+                }
+
+                // Chèn key vào đúng vị trí
+                a[j + 1] = key;
+            }
+            return a;
+        }
+
+        // 3. Hàm kích hoạt sắp xếp và hiển thị chi tiết từng bước ra màn hình
+        function chaySapXepChen() {
+            // Sao chép mảng gốc để thực hiện và ghi log
+            let a = [...arr];
+            let log = "";
+            let n = a.length;
+
+            for (let i = 1; i < n; i++) {
+                let key = a[i];
+                let j = i - 1;
+
+                log += `--- Vòng lặp i = ${i} (Lấy key = ${key} để chèn) ---\n`;
+                log += `Dãy đã sắp xếp trước đó: [${a.slice(0, i).join(", ")}]\n`;
+
+                while (j >= 0 && a[j] > key) {
+                    log += `  -> ${a[j]} > ${key}: Dịch chuyển ${a[j]} sang phải (vị trí index ${j + 1})\n`;
+                    a[j + 1] = a[j];
+                    j = j - 1;
+                }
+
+                a[j + 1] = key;
+                log += `  => Đặt key = ${key} vào vị trí index ${j + 1}\n`;
+                log += `Mảng sau bước ${i}: [${a.join(", ")}]\n\n`;
+            }
+
+            // Hiển thị kết quả mảng sau khi sắp xếp
+            const ketQuaEl = document.getElementById("ketQua");
+            ketQuaEl.innerText = "=> Kết quả sau khi sắp xếp: [" + a.join(", ") + "]";
+            ketQuaEl.style.color = "green";
+
+            // Hiển thị chi tiết từng bước thực hiện
+            document.getElementById("chiTietCacBuoc").innerText = log;
+        }
+    </script>
+</body>
+</html>

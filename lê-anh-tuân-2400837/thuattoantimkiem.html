@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thuật Toán Tìm Kiếm Tuyến Tính</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .khung {
+            border: 1px solid #333;
+            padding: 20px;
+            max-width: 600px;
+        }
+        input, button {
+            padding: 6px 12px;
+            font-size: 15px;
+        }
+        #ketQua {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="khung">
+        <h2>Thuật Toán Tìm Kiếm Tuyến Tính (Linear Search)</h2>
+        <p><strong>Mảng dữ liệu:</strong> <span id="hienThiMang"></span></p>
+
+        <label for="soCanTim">Nhập số cần tìm: </label>
+        <input type="number" id="soCanTim" value="23" placeholder="Nhập số...">
+        <button onclick="xuLyTimKiem()">Tìm kiếm</button>
+
+        <div id="ketQua"></div>
+    </div>
+
+    <script>
+        /*
+        ========================================================================
+        MÃ GIẢ THUẬT TOÁN TÌM KIẾM TUYẾN TÍNH (LINEAR SEARCH)
+
+        Thuật toán TimKiemTuyenTinh(A, n, x):
+            Đầu vào (Input) : Mảng A gồm n phần tử, giá trị cần tìm x
+            Đầu ra (Output) : Vị trí (chỉ số) của x trong A hoặc -1 nếu không tìm thấy
+
+            Bắt đầu:
+                Lặp i từ 0 đến n - 1:
+                    Nếu A[i] == x thì:
+                        Trả về i        // Tìm thấy, trả về vị trí index
+                Trả về -1               // Đã duyệt hết mảng nhưng không tìm thấy
+            Kết thúc
+        ========================================================================
+        */
+
+        const arr = [4, 7, 10, 15, 23, 38, 42, 20, 40, 99, 80];
+
+        document.getElementById("hienThiMang").innerText = "[" + arr.join(", ") + "]";
+
+        function timKiemTuyenTinh(a, x) {
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] === x) {
+                    return i; // Tìm thấy phần tử tại vị trí i
+                }        
+            }
+            return -1; // Không tìm thấy trong mảng
+        }
+        function xuLyTimKiem() {
+            const giaTriNhap = document.getElementById("soCanTim").value;
+            const ketQuaEl = document.getElementById("ketQua");
+
+            if (giaTriNhap === "") {
+                ketQuaEl.innerText = "Vui lòng nhập một số để tìm kiếm!";
+                ketQuaEl.style.color = "red";
+                return;
+            }
+
+            const x = parseInt(giaTriNhap);
+
+            const viTri = timKiemTuyenTinh(arr, x);
+
+            if (viTri !== -1) {
+                ketQuaEl.innerText = "=> Tìm thấy số " + x + " tại vị trí index: " + viTri;
+                ketQuaEl.style.color = "green";
+            } else {
+                ketQuaEl.innerText = "=> Không tìm thấy số " + x + " trong mảng (trả về -1)";
+                ketQuaEl.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>

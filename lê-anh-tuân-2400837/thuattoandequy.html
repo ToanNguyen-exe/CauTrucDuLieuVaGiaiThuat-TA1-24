@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thuật Toán Đệ Quy - Tính Giai Thừa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .khung {
+            border: 1px solid #333;
+            padding: 20px;
+            max-width: 650px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 6px 12px;
+            font-size: 15px;
+        }
+        #ketQua {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        #chiTietCacBuoc {
+            background-color: #f4f4f4;
+            border: 1px dashed #666;
+            padding: 10px;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="khung">
+        <h2>Thuật Toán Đệ Quy: Tính Giai Thừa (n!)</h2>
+        
+        <label for="nhapN">Nhập số nguyên n (n &ge; 0): </label>
+        <input type="number" id="nhapN" value="5" min="0" max="20" placeholder="Nhập n...">
+        <button onclick="chayTinhGiaiThua()">Tính n!</button>
+
+        <div id="ketQua"></div>
+    </div>
+
+    <div class="khung">
+        <h3>Chi tiết các bước đệ quy (Ngăn xếp Call Stack):</h3>
+        <div id="chiTietCacBuoc">Chưa thực hiện tính toán...</div>
+    </div>
+
+    <script>
+        /*
+        ========================================================================
+        MÃ GIẢ THUẬT TOÁN ĐỆ QUY TÍNH GIAI THỪA (FACTORIAL)
+
+        Thuật toán TinhGiaiThua(n):
+            Đầu vào (Input) : Số nguyên không âm n (n >= 0)
+            Đầu ra (Output) : Giá trị giai thừa n!
+
+            Bắt đầu:
+                Nếu (n == 0 hoặc n == 1) thì:
+                    Trả về 1                          // Neo đệ quy (Điều kiện dừng)
+                Ngược lại:
+                    Trả về n * TinhGiaiThua(n - 1)    // Lời gọi đệ quy
+            Kết thúc
+        ========================================================================
+        */
+
+        function tinhGiaiThua(n) {
+            // Điều kiện dừng (Neo đệ quy)
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            // Lời gọi đệ quy
+            return n * tinhGiaiThua(n - 1);
+        }
+
+        function chayTinhGiaiThua() {
+            const inputVal = document.getElementById("nhapN").value;
+            const ketQuaEl = document.getElementById("ketQua");
+            const chiTietEl = document.getElementById("chiTietCacBuoc");
+
+            if (inputVal === "") {
+                ketQuaEl.innerText = "Vui lòng nhập giá trị n!";
+                ketQuaEl.style.color = "red";
+                return;
+            }
+
+            const n = parseInt(inputVal);
+
+            if (n < 0) {
+                ketQuaEl.innerText = "Không tính được giai thừa cho số âm (yêu cầu n >= 0)!";
+                ketQuaEl.style.color = "red";
+                chiTietEl.innerText = "Lỗi đầu vào.";
+                return;
+            }
+
+            if (n > 20) {
+                ketQuaEl.innerText = "Vui lòng nhập n <= 20 để tránh vượt quá giới hạn hiển thị số của JavaScript!";
+                ketQuaEl.style.color = "red";
+                return;
+            }
+
+            // 1. Gọi hàm đệ quy tính kết quả
+            const ketQua = tinhGiaiThua(n);
+
+            // 2. Hiển thị kết quả ra giao diện
+            ketQuaEl.innerText = `=> KẾT QUẢ: ${n}! = ${ketQua}`;
+            ketQuaEl.style.color = "green";
+
+            // 3. Minh họa chi tiết 2 giai đoạn của đệ quy: Đẩy vào stack & Thu hồi stack
+            let log = "=== GIAI ĐOẠN 1: GỌI ĐỆ QUY (ĐẨY VÀO NGĂN XẾP CALL STACK) ===\n";
+            for (let i = n; i > 1; i--) {
+                log += `Gọi tinhGiaiThua(${i}) = ${i} * tinhGiaiThua(${i - 1})\n`;
+            }
+            log += `-> Chạm neo đệ quy: tinhGiaiThua(${n === 0 ? 0 : 1}) = 1\n\n`;
+
+            log += "=== GIAI ĐOẠN 2: THU HỒI VÀ TRẢ VỀ KẾT QUẢ (TÍNH TỪ DƯỚI LÊN) ===\n";
+            let tich = 1;
+            log += `Tại n = ${n === 0 ? 0 : 1}: kết quả = 1\n`;
+            for (let i = 2; i <= n; i++) {
+                tich *= i;
+                log += `Tại n = ${i}: kết quả = ${i} * tinhGiaiThua(${i - 1}) = ${i} * ${tich / i} = ${tich}\n`;
+            }
+
+            chiTietEl.innerText = log;
+        }
+    </script>
+</body>
+</html>
