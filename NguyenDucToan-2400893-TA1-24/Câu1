@@ -1,0 +1,14 @@
+gồm các bước như sau
+
+Bước 1: Khởi tạo chỉ số duyệt i = 0.
+Bước 2: So sánh phần tử arr[i] với giá trị cần tìm x:
+    Nếu arr[i] == x: Dừng thuật toán, trả về chỉ số i.
+    Nếu arr[i] != x: Sang Bước 3.
+Bước 3: Tăng chỉ số i = i + 1.
+Bước 4: Kiểm tra điều kiện dừng:
+    Nếu i < n: Quay lại Bước 2.
+    Nếu i >= n: Đã duyệt hết mảng, sang Bước 5.
+Bước 5: Trả về -1 (không tìm thấy phần tử trong mảng).
+
+
+

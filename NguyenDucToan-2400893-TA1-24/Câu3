@@ -1,0 +1,5 @@
+các bước thực hiện bằng mã giả 
+Bước 1 (Điều kiện dừng / Neo): Nếu n == 0 hoặc n == 1, trả về 1  (vì 0!=1!=1)
+Bước 2 (Bước đệ quy): Nếu n > 1, gọi đệ quy tính tinhGiaiThua(n - 1).
+Bước 3: Lấy n nhân với kết quả đệ quy: n * tinhGiaiThua(n - 1) và trả về kết quả.
+
